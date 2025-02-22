@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(_eocp(men-lfn6k)c_l@s*!pojr0y@eadru-$@goha0ygl(jl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['frota-front.onrender.com']
+ALLOWED_HOSTS = ['frota-front.onrender.com', '127.0.0.1']
 
 
 # Application definition

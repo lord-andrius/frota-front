@@ -41,7 +41,7 @@
     let carregando = document.getElementById('carregando');
     let corpoTabela = document.getElementById('corpoTabela');
     let req = new XMLHttpRequest();
-    req.open("GET", "https://82.25.79.241:8000/api/motivodefeito");
+    req.open("GET", "https://apigateway.site/api/motivodefeito");
     req.addEventListener("load", () => {
         carregando.style.visibility =  'hidden';
         let resposta = JSON.parse(req.response);
@@ -57,7 +57,7 @@
             deletar.innerText = "deletar";
             deletar.addEventListener('click', () => {
               let reqExcluir =  new XMLHttpRequest();
-              reqExcluir.open("DELETE", `https://82.25.79.241:8000/api/motivodefeito/${element.id}`);
+              reqExcluir.open("DELETE", `https://apigateway.site/api/motivodefeito/${element.id}`);
               //reqExcluir.withCredentials = true;
               reqExcluir.setRequestHeader('Access-Control-Allow-Origin', '*');
               reqExcluir.addEventListener('load', () => {

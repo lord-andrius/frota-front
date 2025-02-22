@@ -35,7 +35,7 @@
     let corpo = {};
     corpo['motivo'] = parametros.get('motivo');
     let req = new XMLHttpRequest();
-    req.open('POST', 'https://82.25.79.241:8000/api/motivodefeito');
+    req.open('POST', 'https://apigateway.site/api/motivodefeito');
     req.addEventListener('load', () => {
       window.location.replace("/motivodefeito");
     });
