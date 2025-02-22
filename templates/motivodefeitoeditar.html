@@ -36,7 +36,7 @@
     let corpo = {};
     corpo['motivo'] = parametros.get('motivo');
     let req = new XMLHttpRequest();
-    req.open('PUT', `http://82.25.79.241:8000/api/motivodefeito/${id}`);
+    req.open('PUT', `https://82.25.79.241:8000/api/motivodefeito/${id}`);
     req.addEventListener('load', () => {
       window.location.replace("/motivodefeito");
     });
@@ -46,7 +46,7 @@
     let entradaId = document.getElementById('id');
     entradaId.value = id;
     let req = new XMLHttpRequest();
-    req.open('GET', `http://82.25.79.241:8000/api/motivodefeito/${id}`);
+    req.open('GET', `https://82.25.79.241:8000/api/motivodefeito/${id}`);
     req.addEventListener('load', () => {
       let resposta = JSON.parse(req.response);
       let entradaMotivo = document.getElementById('motivo');
