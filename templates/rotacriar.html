@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veiculo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> 
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Frota</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="/rota">Voltar</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<form method="get">
+<label for="data">data:</label><br>
+<input type="date" name="data" id="data" required><br>
+<label for="placa">placa:</label><br>
+<select name="placa" id="placa" required>
+</select><br>
+<label for="motorista">motorista:</label><br>
+<select name="motorista" id="motorista" required>
+</select><br>
+<label for="origem">origem:</label><br>
+<input type="text" name="origem" id="origem" required><br>
+<label for="destino">destino:</label><br>
+<input type="text" name="destino" id="destino"><br>
+<label for="distancia">distância:</label><br>
+<input type="number" name="distancia" id="distancia"><br>
+<label for="pesoCarga">peso carga:</label><br>
+<input type="number" name="pesoCarga" id="pesoCarga" required><br>
+<label for="receita">receita:</label><br>
+<input type="number" name="receita" id="receita"></br>
+<label for="combustivel">combustível:</label><br>
+<input type="number" name="combustivel" id="combustivel" required></br>
+<label for="pedagio">pedágio:</label><br>
+<input type="number" name="pedagio" id="pedagio" required></br>
+<label for="outros">outros:</label><br>
+<input type="outros" name="outros" id="outros" required></br>
+<fieldset>
+  <legend>A carga foi entregue no prazo?</legend>
+  <input type="radio" name="noPrazo" id="noPrazoSim" value="s" required>
+  <label for="noPrazoSim">sim</label>
+  <input type="radio" name="noPrazo" id="noPrazoNao" value="n" required>
+  <label for="noPrazoNao">não</label>
+</fieldset>
+<input type="text" name="enviar" id="enviar" value="*" style="visibility:hidden"><br>
+<input type="submit" value="Enviar">
+</form>
+<script>
+  let parametros = new URLSearchParams(window.location.search);
+  let reqplacas = new XMLHttpRequest();
+  reqplacas.open("GET", 'https://apigateway.site/api/veiculo');
+  reqplacas.addEventListener('load', () => {
+    let resposta = JSON.parse(reqplacas.response);
+    let placa = document.getElementById('placa');
+    let placaAntiga = parametros.get('placa');
+    resposta.forEach((elemento) => {
+        let opcao = document.createElement('option');
+        opcao.value = elemento.placa;
+        opcao.innerText = elemento.placa; 
+        if (placaAntiga == elemento.placa) {
+          placa.value = elemento.placa;
+        } 
+        placa.appendChild(opcao);
+    });
+  });
+  reqplacas.send();
+  let reqmotoristas = new XMLHttpRequest();
+  reqmotoristas.open("GET", 'https://apigateway.site/api/motorista');
+  reqmotoristas.addEventListener('load', () => {
+    let resposta = JSON.parse(reqmotoristas.response);
+    let motorista = document.getElementById('motorista');
+    let cnhAntiga = parametros.get('motorista');
+    resposta.forEach((elemento) => {
+      let opcao = document.createElement('option');
+      opcao.value = elemento.cnh;
+      opcao.innerText = `${elemento.cnh} - ${elemento.nome}`;
+      if (cnhAntiga == elemento.cnh) {
+        motorista.value = elemento.cnh 
+      }
+      motorista.appendChild(opcao);
+    });
+  });
+  reqmotoristas.send();
+  if (parametros.has("enviar")) {
+    let corpo = {};
+    corpo['data'] = parametros.get('data');
+    corpo['placa'] = parametros.get('placa');
+    corpo['motorista'] = parametros.get('motorista');
+    corpo['origem'] = parametros.get('origem');
+    corpo['destino'] = parametros.get('destino');
+    corpo['distancia'] = parametros.get('distancia');
+    corpo['pesoCarga'] = parametros.get('pesoCarga');
+    corpo['receita'] = parametros.get('receita');
+    corpo['combustivel'] = parametros.get('combustivel');
+    corpo['pedagio'] = parametros.get('pedagio');
+    corpo['outros'] = parametros.get('outros');
+    corpo['noPrazo'] = parametros.get('noPrazo') == 's' ? true : false;
+    console.log(JSON.stringify(corpo));
+    console.log(corpo);
+    let req = new XMLHttpRequest();
+    req.open('POST', 'https://apigateway.site/api/rota');
+    req.addEventListener('load', () => {
+      window.location.replace("/rota");
+    });
+    req.send(new Blob([JSON.stringify(corpo)], {type: 'application/json'}));
+  }
+</script>
+</body>
+</html>
