@@ -37,4 +37,6 @@ urlpatterns = [
     path('rota/criar', views.rotaCriar, name="rotaCriar"),
     path('rota/editar', views.rotaEditar, name="rotaEditar"),
     path('manutencao', views.manutencao, name="manutencao"),
+    path('manutencao/criar', views.manutencaoCriar, name="manutencaoCriar"),
+    path('manutencao/editar', views.manutencaoEditar, name="manutencaoEditar"),
 ]

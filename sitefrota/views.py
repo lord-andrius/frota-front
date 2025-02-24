@@ -65,6 +65,15 @@ def rotaCriar(request):
 def rotaEditar(request):
     template = loader.get_template('rotaeditar.html')
     return HttpResponse(template.render())
+
 def manutencao(request):
     template = loader.get_template('manutencao.html')
+    return HttpResponse(template.render()) 
+
+def manutencaoCriar(request):
+    template = loader.get_template('manutencaocriar.html')
+    return HttpResponse(template.render()) 
+
+def manutencaoEditar(request):
+    template = loader.get_template('manutencaoeditar.html')
     return HttpResponse(template.render()) 
